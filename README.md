@@ -1,2 +1,8 @@
+# Lab Manual Conversational Assistant
 
-clear
+Track A: Essential (Recommended for Most Teams)
+
+## Setup
+
+### Install Dependencies
+installed
