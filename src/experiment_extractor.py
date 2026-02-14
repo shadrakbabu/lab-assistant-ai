@@ -73,6 +73,8 @@ class ExperimentExtractor:
 
             # Join remaining lines into a single title string
             title = ' '.join(cleaned_lines)
+            # Remove any inline page-range fragments left inside the title
+            title = re.sub(r'\s*\d+\s*-\s*\d+\s*', ' ', title).strip()
             # Remove the leading serial from title if still present
             title = re.sub(r'^\s*\d+\s*[:.-]?\s*', '', title).strip()
             # Remove trailing page ranges at end
