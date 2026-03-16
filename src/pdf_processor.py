@@ -1,4 +1,3 @@
-import pypdf
 import pdfplumber
 from typing import List, Dict
 

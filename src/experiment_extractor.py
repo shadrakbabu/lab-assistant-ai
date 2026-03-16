@@ -21,7 +21,7 @@ class ExperimentExtractor:
 
     def _find_experiments_list(self, text: str) -> str:
         """Return the text block containing 'List of Experiments' if present."""
-        match = re.search(r'List of Experiments.*?(?=EVALUATION|Evaluation|INDEX|Index|$)', text, re.IGNORECASE | re.DOTALL)
+        match = re.search(r'List of Experiments.*?(?=\n\s*(?:Experiment|Exp)\b|EVALUATION|Evaluation|INDEX|Index|$)', text, re.IGNORECASE | re.DOTALL)
         return match.group(0) if match else ""
 
     def _parse_experiment_list(self, list_text: str) -> List[Dict]:
@@ -112,22 +112,51 @@ class ExperimentExtractor:
                 return False
         return len(title) > 5
 
-    def extract_experiment_section(self, text: str, exp_number: str) -> str:
-        """Extract the full section for a given experiment number.
+    def extract_experiment_section(self, text: str, exp_number: str, title: str | None = None) -> str:
+        """Extract the full section for a given experiment by heading and numbering."""
+        if not text:
+            return ""
 
-        Searches for headings like "Experiment 6" or "6." and returns the
-        content until the next experiment heading.
-        """
-        # Try multiple patterns to locate the experiment start
-        patterns = [
-            rf'(?:^|\n)\s*Experiment\s+{re.escape(exp_number)}\b[\s\S]*?(?=(?:\n\s*Experiment\s+\d+\b)|$)',
-            rf'(?:^|\n)\s*{re.escape(exp_number)}[.\)\s-]+[\s\S]*?(?=(?:\n\s*\d+[.\)\s-])|$)'
-        ]
+        exp_number_norm = str(exp_number).strip()
+        lower_text = text.lower()
 
-        for pat in patterns:
-            m = re.search(pat, text, re.IGNORECASE | re.MULTILINE)
-            if m:
-                # Return the matched block, trimmed
-                return m.group(0).strip()
+        # Start searching after the List of Experiments block to avoid TOC matches.
+        list_block = self._find_experiments_list(text)
+        search_start = 0
+        if list_block:
+            search_start = text.find(list_block) + len(list_block)
+
+        # Find all experiment headings in the body.
+        heading_regex = re.compile(r'(^|\n)\s*(?:experiment|exp)\s*(?:#\s*)?(\d+)\b[^\n]*', re.IGNORECASE)
+        headings = [m for m in heading_regex.finditer(text, search_start)]
+
+        start_idx = None
+        for i, m in enumerate(headings):
+            if m.group(2).strip() == exp_number_norm:
+                start_idx = m.start()
+                if i + 1 < len(headings):
+                    end_idx = headings[i + 1].start()
+                else:
+                    end_idx = len(text)
+                return text[start_idx:end_idx].strip()
+
+        # Fallback: numeric heading lines like '1.' or '1)' but only if near experiment heading text
+        numeric_regex = re.compile(r'(^|\n)\s*(\d+)\s*[\.)]\s*.*', re.MULTILINE)
+        matches = [m for m in numeric_regex.finditer(text, search_start)]
+        for i, m in enumerate(matches):
+            if m.group(2).strip() == exp_number_norm:
+                start_idx = m.start()
+                end_idx = matches[i + 1].start() if i + 1 < len(matches) else len(text)
+                return text[start_idx:end_idx].strip()
+
+        # Fallback using title phrase if available
+        if title:
+            normalized_title = ' '.join(title.split()).lower()
+            pos = lower_text.find(normalized_title, search_start)
+            if pos != -1:
+                next_exp = heading_regex.search(text, pos + len(normalized_title))
+                if next_exp:
+                    return text[pos:next_exp.start()].strip()
+                return text[pos:].strip()
 
         return ""
