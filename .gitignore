@@ -1,10 +1,58 @@
-venv/
+# Python
 __pycache__/
-*.pyc
-.env
-.DS_Store
-uploads/
-*.egg-info/
-dist/
+*.py[cod]
+*$py.class
+*.so
+.Python
 build/
-.streamlit/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environment
+venv/
+ENV/
+env/
+.venv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Environment variables
+.env
+.env.local
+
+# Data and models
+data/
+*.pdf
+vectorstore/
+*.db
+
+# Streamlit
+.streamlit/secrets.toml
+.streamlit/cache/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Project specific
+*.log
