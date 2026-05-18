@@ -35,10 +35,14 @@ class ExperimentParser:
         """Initialize the experiment parser."""
         # Regex patterns to detect experiments
         self.exp_patterns = [
-            r"experiment\s+(\d+)",  # "Experiment 1"
-            r"exp\.?\s+(\d+)",      # "Exp 1" or "Exp. 1"
-            r"exp(?:eriment)?\s+#(\d+)",  # "Exp #1"
-            r"procedure\s+(\d+)",   # "Procedure 1"
+           r"experiment\s+(\d+)",           # "EXPERIMENT 1"
+           r"experiment\s+no[-:\s]*?(\d+)", # "EXPERIMENT No- 1" / "EXPERIMENT NO: 1"
+           r"experiment\s+#(\d+)",          # "EXPERIMENT #1"
+           r"exp\.?\s+(\d+)",               # "EXP 1" / "EXP. 1"
+           r"exp\.?\s+no[-:\s]*?(\d+)",     # "EXP No- 1"
+           r"exp(?:eriment)?\s+#(\d+)",     # "EXPERIMENT #1"
+           r"procedure\s+(\d+)",            # "PROCEDURE 1"
+           r"experiment\s*(?:no\.?|number)?\s*[-:\.]?\s*(\d+)"
         ]
 
         # Equipment keywords
