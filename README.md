@@ -12,7 +12,7 @@ A production-ready AI-powered lab manual assistant that accepts PDF lab manuals,
 - ✅ Safety precautions extraction
 - ✅ Semantic search using FAISS
 - ✅ Conversation-based Q&A
-- ✅ Export results (coming soon)
+
 
 ## Tech Stack
 
@@ -126,7 +126,7 @@ The app will be available at `http://localhost:8501`
 ### Week 5-6: Specialization 
 - [x] Subject-specific assistant (Any subject)
 
-### Week 7-8: Production Ready (Coming Soon)
+### Week 7-8: Production Ready
 - [x] Enhanced UI with dashboards
 - [ ] Deployment configuration
 
