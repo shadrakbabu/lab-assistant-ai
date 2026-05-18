@@ -114,25 +114,21 @@ The app will be available at `http://localhost:8501`
 - [x] Basic Streamlit UI
 - [x] File upload capability
 - [x] Configuration management
-- [ ] PDF text extraction (next)
-- [ ] Experiment identification (next)
+- [x] PDF text extraction
+- [x] Experiment identification 
 
-### Week 3-4: Core Features (Coming Soon)
-- Procedure parsing tool
-- Theory explanation module
-- Equipment extraction
-- Safety precautions detection
-- Troubleshooting suggestions
+### Week 3-4: Core Features ✅
+- [x]Procedure parsing tool
+- [x]Theory explanation module
+- [x]Equipment extraction
+- [x]Safety precautions detection
 
-### Week 5-6: Specialization (Coming Soon)
-- Subject-specific assistant (Chemistry/Physics/CS)
-- Full experiment lifecycle support
+### Week 5-6: Specialization 
+- [x]Subject-specific assistant (Any subject)
 
 ### Week 7-8: Production Ready (Coming Soon)
-- Enhanced UI with dashboards
-- Error handling and validation
-- Export to text/PDF
-- Deployment configuration
+- [x] Enhanced UI with dashboards
+- [ ] Deployment configuration
 
 ## API Configuration
 
