@@ -118,13 +118,13 @@ The app will be available at `http://localhost:8501`
 - [x] Experiment identification 
 
 ### Week 3-4: Core Features ✅
-- [x]Procedure parsing tool
-- [x]Theory explanation module
-- [x]Equipment extraction
-- [x]Safety precautions detection
+- [x] Procedure parsing tool
+- [x] Theory explanation module
+- [x] Equipment extraction
+- [x] Safety precautions detection
 
 ### Week 5-6: Specialization 
-- [x]Subject-specific assistant (Any subject)
+- [x] Subject-specific assistant (Any subject)
 
 ### Week 7-8: Production Ready (Coming Soon)
 - [x] Enhanced UI with dashboards
