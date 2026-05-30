@@ -426,7 +426,7 @@ Possible reasons:
             # DETECT EXPERIMENT NUMBER
             # =========================
             exp_match = re.search(
-                r"experiment\s*(?:no\.?|number)?\s*[-:\.]?\s*(\d+)",
+                r"exp[a-z]*\s*(?:no\.?|number)?\s*[-:\.]?\s*(\d+)",
                 query,
                 re.IGNORECASE
             )

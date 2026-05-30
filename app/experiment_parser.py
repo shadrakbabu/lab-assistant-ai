@@ -172,17 +172,34 @@ class ExperimentParser:
         """
         procedures = []
 
-        # Look for numbered steps
-        step_pattern = r"^[\s]*(?:step\s+)?(\d+)[.\)]\s*(.+?)$"
+        # 1. Isolate the procedure section to prevent capturing numbered lists from other sections
+        procedure_pattern = r"\b(?:procedure|steps|method)[\s:]*(.*?)(?=\b(?:equipment|apparatus|materials|tools|safety|precaution|warning|danger|theory|aim|result|observation|conclusion)\b|$)"
+        match = re.search(procedure_pattern, exp_text, re.IGNORECASE | re.DOTALL)
+        
+        target_text = exp_text
+        if match:
+            target_text = match.group(1).strip()
+            
+            # Try to split by numbers like "1. ", "2)", "Step 1." inline (PDFs sometimes swallow newlines)
+            steps_split = re.split(r'(?:^|\s)(?:step\s+)?\d+[.\)]\s+', target_text, flags=re.IGNORECASE)
+            for step in steps_split:
+                step = step.strip()
+                if len(step) > 3:
+                    procedures.append(step)
+            
+            if procedures:
+                return procedures[:20]
 
-        for match in re.finditer(step_pattern, exp_text, re.MULTILINE | re.IGNORECASE):
+        # 2. Fallback to line-by-line numbers if section extraction failed or inline didn't work
+        step_pattern = r"^[\s]*(?:step\s+)?(\d+)[.\)]\s*(.+?)$"
+        for match in re.finditer(step_pattern, target_text, re.MULTILINE | re.IGNORECASE):
             step_text = match.group(2).strip()
             if step_text:
                 procedures.append(step_text)
 
-        # If no numbered steps, split by keywords
+        # 3. If no numbered steps, split by keywords
         if not procedures:
-            sentences = re.split(r'[.!?]+', exp_text)
+            sentences = re.split(r'[.!?]+', target_text)
             for sentence in sentences:
                 sentence = sentence.strip()
                 if sentence and any(kw in sentence.lower() for kw in self.procedure_keywords):
@@ -203,17 +220,26 @@ class ExperimentParser:
         equipment = []
 
         # Look for equipment section
-        equipment_pattern = r"(?:apparatus|equipment|materials|tools)[\s:]*([^.]+?)(?:[.!?]|equipment|procedure|step|safety)"
+        equipment_pattern = r"(?:apparatus|equipment|materials|tools)(?:\s+required)?\s*[:\-]*\s*(.*?)(?=\b(?:equipment|procedure|step|safety|theory|aim|result|observation|conclusion)\b|[.!?]|$)"
 
         for match in re.finditer(equipment_pattern, exp_text, re.IGNORECASE | re.DOTALL):
-            equipment_text = match.group(1)
+            equipment_text = match.group(1).strip()
+            # Clean up if just 'required:' was captured inside
+            equipment_text = re.sub(r'^required\s*[:\-]*\s*', '', equipment_text, flags=re.IGNORECASE)
+            
             items = re.split(r'[,\n;]', equipment_text)
             for item in items:
                 item = item.strip()
-                if item and len(item) < 100 and any(kw in item.lower() for kw in self.equipment_keywords):
+                if item and len(item) < 200:
                     equipment.append(item)
 
-        return equipment[:15]  # Limit to first 15 items
+        # De-duplicate
+        unique_equipment = []
+        for eq in equipment:
+            if eq not in unique_equipment:
+                unique_equipment.append(eq)
+
+        return unique_equipment[:15]  # Limit to first 15 items
 
     def extract_safety(self, exp_text: str) -> List[str]:
         """
