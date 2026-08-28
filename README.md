@@ -1,254 +1,139 @@
-# Lab Manual AI Assistant
+# 🧪 Lab Manual Conversational AI Assistant
 
-A production-ready AI-powered lab manual assistant that accepts PDF lab manuals, extracts content, identifies experiments, and provides step-by-step procedures with theory explanations via a clean Streamlit UI.
-
-## Features
-
-- ✅ PDF upload and text extraction
-- ✅ Experiment identification and extraction
-- ✅ Procedure parsing and step-by-step display
-- ✅ Theory explanation in simple terms
-- ✅ Equipment detection and listing
-- ✅ Safety precautions extraction
-- ✅ Semantic search using FAISS
-- ✅ Conversation-based Q&A
-
-
-## Tech Stack
-
-- **Python 3.8+** - Core language
-- **Streamlit** - Web UI framework
-- **LangChain** - LLM orchestration and RAG
-- **PyPDF2** - PDF text extraction
-- **FAISS** - Vector semantic search
-- **spaCy** - NLP for information extraction
-- **SQLite** - Metadata storage
-- **OpenAI/Gemini** - LLM backends
-
-## Project Structure
-
-```
-lab-assistant-ai/
-├── app/
-│   └── __init__.py
-├── utils/
-│   └── __init__.py
-├── data/                    # Uploaded PDFs stored here
-├── db/                      # SQLite database
-├── vectorstore/             # FAISS indices
-├── app.py                   # Main Streamlit app
-├── config.py                # Configuration settings
-├── requirements.txt         # Python dependencies
-├── .env.example             # Environment variables template
-├── .gitignore               # Git ignore rules
-└── README.md               # This file
-```
-
-## Setup Instructions
-
-### 1. Clone or Navigate to Project
-```bash
-cd lab-assistant-ai
-```
-
-### 2. Create Virtual Environment
-```bash
-# Using venv
-python3 -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-```
-
-### 3. Install Dependencies
-```bash
-pip install -r requirements.txt
-
-# Download spaCy model (required for NLP)
-python -m spacy download en_core_web_sm
-```
-
-### 4. Configure Environment Variables
-```bash
-# Copy the example file
-cp .env.example .env
-
-# Edit .env with your API keys
-# Add your OpenAI API key:
-# OPENAI_API_KEY=sk-...
-```
-
-### 5. Run the Application
-```bash
-streamlit run app.py
-```
-
-The app will be available at `http://localhost:8501`
-
-## Usage
-
-### Basic Workflow
-
-1. **Upload PDF**: Click on the file uploader in the sidebar and select your lab manual PDF
-2. **Ask Questions**: Use the query box to ask about:
-   - Specific experiments: "Explain experiment 1"
-   - Procedures: "Give me the procedure"
-   - Theory: "Explain the theory simply"
-   - Equipment: "List the equipment needed"
-   - Safety: "Show safety precautions"
-3. **View Results**: Get instant AI-powered responses
-4. **Export/Share**: Download procedures and explanations (coming soon)
-
-### Example Queries
-
-```
-"What is the objective of experiment 2?"
-"List all equipment needed for experiment 1"
-"Give me step-by-step procedure for experiment 3"
-"Explain the theory behind water distillation"
-"What safety precautions should I take?"
-```
-
-## Implementation Phases
-
-### Week 1-2: Foundation ✅
-- [x] Project structure setup
-- [x] Basic Streamlit UI
-- [x] File upload capability
-- [x] Configuration management
-- [x] PDF text extraction
-- [x] Experiment identification 
-
-### Week 3-4: Core Features ✅
-- [x] Procedure parsing tool
-- [x] Theory explanation module
-- [x] Equipment extraction
-- [x] Safety precautions detection
-
-### Week 5-6: Specialization 
-- [x] Subject-specific assistant (Any subject)
-
-### Week 7-8: Production Ready
-- [x] Enhanced UI with dashboards
-- [ ] Deployment configuration
-
-## API Configuration
-
-### OpenAI Setup
-1. Create account at https://platform.openai.com
-2. Generate API key from https://platform.openai.com/api-keys
-3. Add to `.env`: `OPENAI_API_KEY=sk-...`
-
-### Gemini Setup
-1. Create account at https://makersuite.google.com
-2. Generate API key at https://makersuite.google.com/app/apikey
-3. Add to `.env`: `GEMINI_API_KEY=...`
-
-## Deployment (Streamlit Cloud)
-
-### Prerequisites
-- GitHub account
-- GitHub repository with this code
-
-### Deployment Steps
-
-1. **Push to GitHub**
-```bash
-git init
-git add .
-git commit -m "Initial commit: Lab Manual AI Assistant"
-git branch -M main
-git remote add origin https://github.com/YOUR_USERNAME/lab-assistant-ai.git
-git push -u origin main
-```
-
-2. **Deploy on Streamlit Cloud**
-   - Go to https://share.streamlit.io
-   - Click "New app"
-   - Connect GitHub repo
-   - Select this repo and `app.py` as main file
-   - Click Deploy
-
-3. **Add Secrets**
-   - In Streamlit Cloud dashboard, go to "Settings"
-   - Add secrets:
-     ```
-     OPENAI_API_KEY = "sk-..."
-     LLM_MODEL = "gpt-3.5-turbo"
-     ```
-
-## Development Notes
-
-### Adding New Modules
-
-**PDF Processor** (app/pdf_processor.py) - Coming Soon
-```python
-# Extract text from PDFs
-# Chunk documents for processing
-```
-
-**Experiment Parser** (app/experiment_parser.py) - Coming Soon
-```python
-# Identify experiment sections
-# Extract experiment details
-```
-
-**Theory Explainer** (app/theory_explainer.py) - Coming Soon
-```python
-# Simplify complex concepts
-# Generate explanations
-```
-
-**Safety Module** (app/safety_module.py) - Coming Soon
-```python
-# Extract safety information
-# Provide precautions
-```
-
-## Troubleshooting
-
-### Issue: "OPENAI_API_KEY not found"
-**Solution**: Copy `.env.example` to `.env` and add your API key
-
-### Issue: spaCy model not found
-**Solution**: Run `python -m spacy download en_core_web_sm`
-
-### Issue: "ModuleNotFoundError"
-**Solution**: Ensure virtual environment is activated and dependencies installed:
-```bash
-source venv/bin/activate
-pip install -r requirements.txt
-```
-
-### Issue: Streamlit port already in use
-**Solution**: Run on different port:
-```bash
-streamlit run app.py --server.port 8502
-```
-
-## Performance Tips
-
-- **Large PDFs**: Break into smaller files (< 10 MB recommended)
-- **Vector Search**: First initialization takes longer; subsequent searches are fast
-- **API Calls**: Use gpt-3.5-turbo for faster responses and lower costs
-
-## Contributing
-
-This is a learning project. Feel free to:
-- Add new features
-- Improve extraction accuracy
-- Add support for more document formats
-- Optimize performance
-
-## License
-
-MIT License - See LICENSE file for details
-
-## Support
-
-For issues or questions:
-1. Check troubleshooting section above
-2. Review requirements.txt versions
-3. Verify API keys are correctly set
+A production-ready, full-stack AI web application where students and researchers can upload laboratory manual PDFs, automatically detect experiments, explore step-by-step procedures, understand scientific theory, inspect equipment/safety instructions, and engage in grounded RAG-powered conversation without hallucinations.
 
 ---
 
-**Happy learning! 🧪**
+## ✨ Features
+
+1. **PDF Lab Manual Extraction**: Upload laboratory manuals (up to 50MB) and extract text, page maps, and text statistics using `pypdf`. Handles scanned documents gracefully.
+2. **Automated Experiment Parsing**: Detects experiment boundaries (`EXPERIMENT 1`, `EXP. 2`) and structures sections: Aim, Theory, Equipment/Apparatus, Procedure, Observations, Result, Precautions/Safety, and Troubleshooting.
+3. **Automated Subject Classification**: Categorizes manuals into **Physics**, **Chemistry**, **Biology**, **Computer Science**, or **General Science**.
+4. **Interactive Procedure Checklist**: Step-by-step numbered procedures with completion checkboxes, step progress bar, and safety warnings.
+5. **Theory & Simple Explanation Mode**: Full academic theory viewer + a student-friendly "Simple Explanation" mode toggle.
+6. **Equipment & Safety Assistant**: Itemized apparatus cards with purpose guidance and prominent hazard alerts.
+7. **Grounded RAG Conversational AI**: LangChain & FAISS RAG chat interface. Answers are strictly grounded in uploaded manual content with collapsible source citations. Explicitly states when information is not in the manual.
+8. **Modern Educational UI**: Responsive React + Vite + Tailwind CSS dashboard.
+
+---
+
+## 🏗️ Repository Architecture
+
+```
+lab-assistant-ai/
+├── backend/
+│   ├── app/
+│   │   ├── main.py                  # FastAPI Entry Point & CORS setup
+│   │   ├── config.py                # App configuration & settings manager
+│   │   ├── database.py              # SQLite connection & ORM Session Local
+│   │   ├── models/
+│   │   │   ├── manual.py            # Manual & Experiment database models
+│   │   │   └── chat.py              # Chat Request & Response schemas
+│   │   ├── parsers/
+│   │   │   ├── pdf_extractor.py     # PDF text extraction & quality validator
+│   │   │   ├── experiment_parser.py # Regex section boundary detector
+│   │   │   └── subject_classifier.py# Automated subject classifier
+│   │   ├── rag/
+│   │   │   ├── text_splitter.py     # Overlapping text chunker with metadata mapping
+│   │   │   ├── vector_store.py      # FAISS Index + SentenceTransformer embeddings
+│   │   │   └── qa_engine.py         # Grounded RAG Chat Engine (No hallucinations)
+│   │   └── routes/
+│   │       ├── manuals.py           # Upload PDF, list manuals, and manual details
+│   │       ├── experiments.py       # List & fetch experiment details
+│   │       └── chat.py              # Grounded Q&A Chat endpoint
+│   └── tests/
+│       └── test_api.py              # Automated backend pipeline test script
+├── frontend/                        # React + Vite + Tailwind CSS Frontend
+│   ├── index.html
+│   ├── vite.config.js
+│   ├── tailwind.config.js
+│   ├── src/
+│   │   ├── App.jsx                  # Main Dashboard Workspace
+│   │   ├── components/              # React UI Components
+│   │   └── services/
+│   │       └── api.js               # Axios API client for FastAPI backend
+├── requirements.txt                 # Backend Python Dependencies
+├── .env.example                     # Environment Configuration Template
+├── docker-compose.yml               # Multi-container Docker configuration
+└── README.md                        # Project Documentation
+```
+
+---
+
+## ⚡ Quick Start Guide
+
+### 1. Prerequisites
+- Python 3.9+
+- Node.js 18+ & npm
+
+### 2. Backend Setup
+```bash
+# Create virtual environment
+python -m venv venv
+# Activate virtual environment
+# On Windows:
+venv\Scripts\activate
+# On macOS/Linux:
+source venv/bin/activate
+
+# Install Python dependencies
+pip install -r requirements.txt
+
+# Create .env from template
+cp .env.example .env
+
+# Run FastAPI backend server
+uvicorn backend.app.main:app --reload --port 8000
+```
+- API Base URL: `http://localhost:8000`
+- Interactive Swagger API Docs: `http://localhost:8000/docs`
+
+### 3. Frontend Setup
+```bash
+cd frontend
+
+# Install Node dependencies
+npm install
+
+# Start Vite dev server
+npm run dev
+```
+- Web Application: `http://localhost:3000`
+
+---
+
+## 🧪 Running Automated Tests
+
+Run the full end-to-end backend pipeline test (PDF extraction, section parsing, SQLite DB storage, FAISS vector indexing, and Grounded Q&A citations):
+
+```bash
+python backend/tests/test_api.py
+```
+
+Test production frontend build:
+```bash
+cd frontend
+npm run build
+```
+
+---
+
+## 🐳 Docker Deployment
+
+To run both backend and frontend using Docker Compose:
+
+```bash
+docker-compose up --build
+```
+
+---
+
+## 📡 API Endpoints Summary
+
+- `POST /api/manuals/upload`: Upload PDF manual, parse experiments, store in SQLite, index in FAISS vector store.
+- `GET /api/manuals`: List all processed manuals.
+- `GET /api/manuals/{manual_id}`: Get manual metadata & detected experiments.
+- `GET /api/experiments/manual/{manual_id}`: List experiments for a manual.
+- `GET /api/experiments/{experiment_id}`: Get experiment breakdown (Procedure, Theory, Equipment, Safety, Troubleshooting).
+- `POST /api/chat`: Send grounded Q&A chat prompt. Returns answer + source citation excerpts.
+- `GET /health`: System health & vector store status.

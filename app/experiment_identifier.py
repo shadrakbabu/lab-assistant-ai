@@ -74,7 +74,7 @@ class ExperimentIdentifier:
             # EQUIPMENT
             # =========================
             equipment_match = re.search(
-                r'(APPARATUS|EQUIPMENT|MATERIALS REQUIRED)\s*[:\-]?\s*(.*?)(?=PROCEDURE|THEORY|OBSERVATION|RESULT|$)',
+                r'(APPARATUS|EQUIPMENT|MATERIALS REQUIRED|Apparatus Required)\s*[:\-]?\s*(.*?)(?=PROCEDURE|THEORY|OBSERVATION|RESULT|$)',
                 section,
                 re.IGNORECASE | re.DOTALL
             )
