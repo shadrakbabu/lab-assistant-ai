@@ -203,7 +203,7 @@ class ExperimentParser:
         equipment = []
 
         # Look for equipment section
-        equipment_pattern = r"(?:apparatus|equipment|materials|tools)[\s:]*([^.]+?)(?:[.!?]|equipment|procedure|step|safety)"
+        equipment_pattern = r"(?:apparatus|equipment|materials|tools|Apparatus Required)[\s:]*([^.]+?)(?:[.!?]|equipment|procedure|step|safety)"
 
         for match in re.finditer(equipment_pattern, exp_text, re.IGNORECASE | re.DOTALL):
             equipment_text = match.group(1)
