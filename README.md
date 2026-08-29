@@ -3,7 +3,7 @@
 A production-ready, full-stack AI web application where students and researchers can upload laboratory manual PDFs, automatically detect experiments, explore step-by-step procedures, understand scientific theory, inspect equipment/safety instructions, and engage in grounded RAG-powered conversation without hallucinations.
 
 ---
-
+Website (Project) Link : https://lab-assistant-ai.streamlit.app/
 ## ✨ Features
 
 1. **PDF Lab Manual Extraction**: Upload laboratory manuals (up to 50MB) and extract text, page maps, and text statistics using `pypdf`. Handles scanned documents gracefully.
